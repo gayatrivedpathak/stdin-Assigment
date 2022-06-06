@@ -1,56 +1,33 @@
+const { Form } = require("./Form");
+const { Iterator } = require("./Iterator");
+
 process.stdin.setEncoding('utf-8');
 
 const askQuestion = (question) => console.log(question);
 
-class Iterator {
-  constructor(elements) {
-    this.index = 0;
-    this.elements = elements;
-  }
-
-  currentQuestion() {
-    return this.elements[this.index];
-  }
-
-  nextQuestion() {
-    return this.elements[++this.index];
-  }
-}
-
-class Form {
-  constructor() {
-    this.details = []
-  }
-
-  add(detail) {
-    this.details.push(detail);
-  }
-
-  storeData = () => {
-    return {
-      name: this.details[0],
-      dob: this.details[1],
-      hobbies: this.details[2].split(',')
-    };
-  }
-}
-
-const readData = (queIterator, details) => {
-  askQuestion(queIterator.currentQuestion());
+const readData = (queIterator, form) => {
+  let question = queIterator.currentQuestion();
+  askQuestion(question);
   process.stdin.on('data', (chunk) => {
-    details.add(chunk.trim());
-    askQuestion(queIterator.nextQuestion());
+    const response = chunk.trim();
+    if (!form.isValidResponse('_', response)) {
+      question = queIterator.currentQuestion();
+      askQuestion(question);
+      return;
+    }
+    form.add(question, response);
+    question = queIterator.nextQuestion();
+    askQuestion(question);
   });
 
-  process.stdin.on('end', () => console.log(details.storeData()))
+  process.stdin.on('end', () => console.log(form.diplay()))
 }
-
 
 const main = () => {
   const questions = ['Enter name', 'Enter dob', 'Enter hobbies'];
   const queIterator = new Iterator(questions);
-  const details = new Form();
-  readData(queIterator, details);
+  const form = new Form();
+  readData(queIterator, form);
 }
 
 main();

@@ -1,26 +1,63 @@
-const fs = require("fs");
+process.stdin.setEncoding('utf-8');
 
-const person = {};
+const askQuestion = (question) => console.log(question);
 
-const readData = (property) => {
-  process.stdin.setEncoding('utf-8');
+class Iterator {
+  constructor(elements) {
+    this.index = 0;
+    this.elements = elements;
+  }
+
+  currentQuestion() {
+    return this.elements[this.index];
+  }
+
+  nextQuestion() {
+    return this.elements[++this.index];
+  }
+}
+
+class Form {
+  constructor() {
+    this.details = []
+  }
+
+  add(detail) {
+    this.details.push(detail);
+  }
+
+  storeData = () => {
+    return {
+      name: this.details[0],
+      dob: this.details[1],
+      hobbies: this.details[2].split(',')
+    };
+  }
+}
+
+const readData = (queIterator, details) => {
+  askQuestion(queIterator.currentQuestion());
   process.stdin.on('data', (chunk) => {
-    person[property] = chunk.slice(0, -1);
+    details.add(chunk.trim());
+    askQuestion(queIterator.nextQuestion());
   });
 
-  process.stdin.on('end', () => {
-    fs.writeFileSync('./personDetails.json', JSON.stringify(person), 'utf8');
-  });
-};
+  process.stdin.on('end', () => console.log(details.storeData()))
+}
 
-const messages = [
-  { message: 'Please enter your name', property: 'name' },
-];
 
-messages.forEach(({ message, property }) => {
-  console.log(message);
-  readData(property);
-});
+const main = () => {
+  const questions = ['Enter name', 'Enter dob', 'Enter hobbies'];
+  const queIterator = new Iterator(questions);
+  const details = new Form();
+  readData(queIterator, details);
+}
+
+main();
+
+
+
+
 
 
 

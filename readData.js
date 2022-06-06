@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 const person = {};
 
 const readData = (property) => {
@@ -7,7 +9,7 @@ const readData = (property) => {
   });
 
   process.stdin.on('end', () => {
-    console.log(person);
+    fs.writeFileSync('./personDetails.json', JSON.stringify(person), 'utf8');
   });
 };
 

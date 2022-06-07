@@ -10,7 +10,7 @@ const readData = (queIterator, form) => {
   askQuestion(question);
   process.stdin.on('data', (chunk) => {
     const response = chunk.trim();
-    if (!form.isValidResponse('_', response)) {
+    if (!form.isValidResponse(question, response)) {
       question = queIterator.currentQuestion();
       askQuestion(question);
       return;
@@ -20,7 +20,7 @@ const readData = (queIterator, form) => {
     askQuestion(question);
   });
 
-  process.stdin.on('end', () => console.log(form.diplay()))
+  process.stdin.on('end', () => console.log(form.display()))
 }
 
 const main = () => {

@@ -1,19 +1,45 @@
+const getfeildName = (question) => question.split(' ')[1];
+
+const isValidDate = (date) => {
+  const ymd = date.split('-');
+  return ymd[0].length === 4 &&
+    ymd[1].length === 2 &&
+    ymd[2].length === 2;
+};
+
+const isValidName = (name) => name.length >= 4;
+
+const areEmpty = (hobbies) => !hobbies.length < 1;
+
 class Form {
   constructor() {
     this.responses = [];
   }
 
   add(question, response) {
-    const fieldName = question.split(' ')[1];
-    this.responses.push({ [fieldName]: response });
+    const fieldName = getfeildName(question);
+    if (fieldName === 'hobbies') {
+      response = response.split(',');
+    }
+    this.responses.push({ fieldName, response });
   }
 
-  isValidResponse(feildName, response) {
-    return response.length >= 4;
+  isValidResponse(question, response) {
+    const fieldName = getfeildName(question);
+    const validators = {
+      name: isValidName(response),
+      dob: isValidDate(response),
+      hobbies: areEmpty(response)
+    };
+    return validators[fieldName];
   }
 
-  diplay() {
-    return this.responses;
+  display() {
+    const formContents = {};
+    this.responses.forEach(({ fieldName, response }) => {
+      formContents[fieldName] = response;
+    });
+    return formContents;
   }
 }
 exports.Form = Form;

@@ -11,6 +11,8 @@ const isValidName = (name) => name.length >= 4;
 
 const areEmpty = (hobbies) => !hobbies.length < 1;
 
+const isValidMobileNo = (mobNo) => mobNo.length === 10;
+
 class Form {
   constructor() {
     this.responses = [];
@@ -29,7 +31,8 @@ class Form {
     const validators = {
       name: isValidName(response),
       dob: isValidDate(response),
-      hobbies: areEmpty(response)
+      hobbies: areEmpty(response),
+      mobile_no: isValidMobileNo(response)
     };
     return validators[fieldName];
   }

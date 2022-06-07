@@ -1,5 +1,5 @@
-const { Form } = require("./Form");
-const { Iterator } = require("./Iterator");
+const { Form, isValidResponse } = require("./form");
+const { Iterator } = require("./iterator");
 
 process.stdin.setEncoding('utf-8');
 
@@ -10,7 +10,7 @@ const readResponses = (queIterator, form) => {
   askQuestion(question);
   process.stdin.on('data', (chunk) => {
     const response = chunk.trim();
-    if (!form.isValidResponse(question, response)) {
+    if (!isValidResponse(question, response)) {
       question = queIterator.currentQuestion();
       askQuestion(question);
       return;

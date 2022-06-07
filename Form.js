@@ -13,6 +13,17 @@ const areEmpty = (hobbies) => !hobbies.length < 1;
 
 const isValidMobileNo = (mobNo) => mobNo.length === 10;
 
+const isValidResponse = (question, response) => {
+  const fieldName = getfeildName(question);
+  const validators = {
+    name: isValidName(response),
+    dob: isValidDate(response),
+    hobbies: areEmpty(response),
+    mobile_no: isValidMobileNo(response)
+  };
+  return validators[fieldName];
+}
+
 class Form {
   constructor() {
     this.responses = [];
@@ -26,17 +37,6 @@ class Form {
     this.responses.push({ fieldName, response });
   }
 
-  isValidResponse(question, response) {
-    const fieldName = getfeildName(question);
-    const validators = {
-      name: isValidName(response),
-      dob: isValidDate(response),
-      hobbies: areEmpty(response),
-      mobile_no: isValidMobileNo(response)
-    };
-    return validators[fieldName];
-  }
-
   display() {
     const formContents = {};
     this.responses.forEach(({ fieldName, response }) => {
@@ -46,3 +46,4 @@ class Form {
   }
 }
 exports.Form = Form;
+exports.isValidResponse = isValidResponse;

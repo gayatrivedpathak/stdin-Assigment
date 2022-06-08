@@ -53,7 +53,7 @@ class Form {
     this.#responses.push({ fieldName, response });
   }
 
-  display() {
+  filledForm() {
     const formContents = {};
     this.#responses.forEach(({ fieldName, response }) => {
       formContents[fieldName] = response;

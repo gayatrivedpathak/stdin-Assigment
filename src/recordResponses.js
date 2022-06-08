@@ -3,15 +3,14 @@ const fs = require('fs');
 
 process.stdin.setEncoding('utf-8');
 
-const registerResponses = (form, response) => {
+const registerResponses = (form, response, logger, onResponsesRegistered) => {
   form.add(response.trim());
   if (!form.isFilled()) {
-    console.log(form.nextPrompt());
+    logger(form.nextPrompt());
     return;
   }
-  const filledForm = form.display();
-  fs.writeFileSync('./responces.json', JSON.stringify(filledForm), 'utf-8');
-  process.stdin.destroy();
+  const filledForm = form.filledForm();
+  onResponsesRegistered(filledForm);
 }
 
 module.exports = { registerResponses };

@@ -1,5 +1,4 @@
 const getfeildName = (question) => question.split(' ')[1];
-
 const isValidDate = (date) => {
   const ymd = date.split('-');
   return ymd[0].length === 4 &&
@@ -25,25 +24,43 @@ const isValidResponse = (question, response) => {
 }
 
 class Form {
-  constructor() {
-    this.responses = [];
+  #fields
+  #index
+  #responses
+  constructor(fields) {
+    this.#fields = fields;
+    this.#responses = [];
+    this.#index = 0;
   }
 
-  add(question, response) {
-    const fieldName = getfeildName(question);
+  nextPrompt() {
+    return this.#fields[++this.#index].prompt;
+  }
+
+  currentPrompt() {
+    return this.#fields[this.#index].prompt;
+  }
+
+  isFilled() {
+    return this.#fields.length === this.#responses.length;
+  }
+
+  add(response) {
+    const fieldName = this.#fields[this.#index].name;
     if (fieldName === 'hobbies') {
       response = response.split(',');
     }
-    this.responses.push({ fieldName, response });
+    this.#responses.push({ fieldName, response });
   }
 
   display() {
     const formContents = {};
-    this.responses.forEach(({ fieldName, response }) => {
+    this.#responses.forEach(({ fieldName, response }) => {
       formContents[fieldName] = response;
     });
     return formContents;
   }
 }
+
 exports.Form = Form;
 exports.isValidResponse = isValidResponse;

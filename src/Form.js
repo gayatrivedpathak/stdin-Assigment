@@ -6,12 +6,12 @@ class Form {
     this.#index = 0;
   }
 
-  getCurrentField() {
+  #getCurrentField() {
     return this.#fields[this.#index];
   }
 
   currentPrompt() {
-    return this.getCurrentField().getPrompt();
+    return this.#getCurrentField().getPrompt();
   }
 
   isFilled() {
@@ -21,12 +21,12 @@ class Form {
   }
 
   add(response) {
-    this.getCurrentField().fill(response);
+    this.#getCurrentField().fill(response);
     this.#index++;
   }
 
   isValidResponse(response) {
-    return this.getCurrentField().isValid(response);
+    return this.#getCurrentField().isValid(response);
   }
 
   filledForm() {

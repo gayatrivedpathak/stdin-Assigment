@@ -1,11 +1,12 @@
 ## DOING
+- [ ] Implement multiliField
 
 ## TODO 
-- [ ] Add tests for the form entity
 - [ ] Add tests for the field entity
 - [ ] Inject field parsers in the field constructor
 
 ## DONE
+- [x] Add tests for the form entity
 - [x] Move field entity in seperate file
 - [x] Create a field entity
 - [x] Change the name of method form#display() to filledFrom

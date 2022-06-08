@@ -19,8 +19,9 @@ const main = () => {
   const nameField = new Field('name', 'Enter name', isLongEnough);
   const dobField = new Field('dob', 'Enter dob', isValidFormat);
   const hobbiesField = new Field('hobbies', 'Enter hobbies', isEmpty);
+  const mobNoField = new Field('mob', 'Enter Mobile Number', isValidMobileNo);
 
-  const form = new Form(nameField, dobField, hobbiesField);
+  const form = new Form(nameField, dobField, hobbiesField, mobNoField);
   console.log(form.currentPrompt());
   process.stdin.on('data', (response) => {
     registerResponses(form, response, console.log, writeResponses);

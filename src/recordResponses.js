@@ -1,12 +1,13 @@
-const { isValidResponse } = require("./form");
-const fs = require('fs');
-
-process.stdin.setEncoding('utf-8');
-
 const registerResponses = (form, response, logger, onResponsesRegistered) => {
+  if (!form.isValidResponse(response)) {
+    logger(form.currentPrompt());
+    return;
+  }
+
   form.add(response.trim());
+
   if (!form.isFilled()) {
-    logger(form.nextPrompt());
+    logger(form.currentPrompt());
     return;
   }
   const filledForm = form.filledForm();

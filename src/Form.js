@@ -1,66 +1,42 @@
-const getfeildName = (question) => question.split(' ')[1];
-const isValidDate = (date) => {
-  const ymd = date.split('-');
-  return ymd[0].length === 4 &&
-    ymd[1].length === 2 &&
-    ymd[2].length === 2;
-};
-
-const isValidName = (name) => name.length >= 4;
-
-const areEmpty = (hobbies) => !hobbies.length < 1;
-
-const isValidMobileNo = (mobNo) => mobNo.length === 10;
-
-const isValidResponse = (question, response) => {
-  const fieldName = getfeildName(question);
-  const validators = {
-    name: isValidName(response),
-    dob: isValidDate(response),
-    hobbies: areEmpty(response),
-    mobile_no: isValidMobileNo(response)
-  };
-  return validators[fieldName];
-}
-
 class Form {
   #fields
   #index
-  #responses
-  constructor(fields) {
+  constructor(...fields) {
     this.#fields = fields;
-    this.#responses = [];
     this.#index = 0;
   }
 
-  nextPrompt() {
-    return this.#fields[++this.#index].prompt;
+  getCurrentField() {
+    return this.#fields[this.#index];
   }
 
   currentPrompt() {
-    return this.#fields[this.#index].prompt;
+    return this.getCurrentField().getPrompt();
   }
 
   isFilled() {
-    return this.#fields.length === this.#responses.length;
+    return this.#fields.every((field) => {
+      return field.isFilled();
+    });
   }
 
   add(response) {
-    const fieldName = this.#fields[this.#index].name;
-    if (fieldName === 'hobbies') {
-      response = response.split(',');
-    }
-    this.#responses.push({ fieldName, response });
+    this.getCurrentField().fill(response);
+    this.#index++;
+  }
+
+  isValidResponse(response) {
+    return this.getCurrentField().isValid(response);
   }
 
   filledForm() {
     const formContents = {};
-    this.#responses.forEach(({ fieldName, response }) => {
-      formContents[fieldName] = response;
+    this.#fields.forEach((field) => {
+      const { name, response } = field.getEntry();
+      formContents[name] = response;
     });
     return formContents;
   }
 }
 
-exports.Form = Form;
-exports.isValidResponse = isValidResponse;
+module.exports = { Form };

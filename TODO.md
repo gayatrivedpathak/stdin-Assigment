@@ -1,11 +1,13 @@
 ## DOING
 
 ## TODO 
-- [ ] Create a field entity
-- [ ] Add tests for the form 
-- 
+- [ ] Add tests for the form entity
+- [ ] Add tests for the field entity
+- [ ] Inject field parsers in the field constructor
 
 ## DONE
+- [x] Move field entity in seperate file
+- [x] Create a field entity
 - [x] Change the name of method form#display() to filledFrom
 - [x] Add tests for registerResponse
 - [x] Change the name of readData files 

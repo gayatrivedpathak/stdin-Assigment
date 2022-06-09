@@ -2,11 +2,13 @@ class MultiLineField {
   #name;
   #prompts;
   #validator;
+  #parser;
   #responses;
-  constructor(name, prompts, validator = () => true) {
+  constructor(name, prompts, validator = () => true, parser = x => x) {
     this.#name = name;
     this.#prompts = prompts;
     this.#validator = validator;
+    this.#parser = parser;
     this.#responses = [];
   }
 
@@ -27,7 +29,7 @@ class MultiLineField {
   }
 
   getEntry() {
-    return { name: this.#name, response: this.#responses.join('\n') };
+    return { name: this.#name, response: this.#parser(this.#responses) };
   }
 }
 

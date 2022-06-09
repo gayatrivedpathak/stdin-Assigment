@@ -2,11 +2,14 @@ class Field {
   #name;
   #prompt;
   #validator;
+  #parser;
   #response;
-  constructor(name, prompt, validator = () => true) {
+
+  constructor(name, prompt, validator = () => true, parser = (x) => x) {
     this.#name = name;
     this.#prompt = prompt;
     this.#validator = validator;
+    this.#parser = parser;
   }
 
   fill(response) {
@@ -26,7 +29,7 @@ class Field {
   }
 
   getEntry() {
-    return { name: this.#name, response: this.#response };
+    return { name: this.#name, response: this.#parser(this.#response) };
   }
 }
 

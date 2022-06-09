@@ -21,8 +21,11 @@ class Form {
   }
 
   add(response) {
-    this.#getCurrentField().fill(response);
-    this.#index++;
+    const field = this.#getCurrentField();
+    field.fill(response)
+    if (field.isFilled()) {
+      this.#index++;
+    };
   }
 
   isValidResponse(response) {

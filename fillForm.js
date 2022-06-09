@@ -1,6 +1,8 @@
-const { Form, Field } = require('./src/form.js');
-const { registerResponses } = require('./src/recordResponses.js');
 const fs = require('fs');
+const { Form } = require('./src/form.js');
+const { Field } = require('./src/field.js');
+const { registerResponses } = require('./src/recordResponses.js');
+const { MultiLineField } = require('./src/multiLineField.js');
 
 process.stdin.setEncoding('utf-8');
 
@@ -21,10 +23,12 @@ const main = () => {
   const hobbiesField = new Field('hobbies', 'Enter hobbies', isEmpty);
   const mobNoField = new Field('mob', 'Enter Mobile Number', isValidMobileNo);
 
-  const form = new Form(nameField, dobField, hobbiesField, mobNoField);
+  const address = new MultiLineField('address', ['Enter address line 1', 'Enter address line 2']);
+
+  const form = new Form(nameField, dobField, hobbiesField, mobNoField, address);
   console.log(form.currentPrompt());
   process.stdin.on('data', (response) => {
-    registerResponses(form, response, console.log, writeResponses);
+    registerResponses(form, response.trim(), console.log, writeResponses);
   });
 };
 

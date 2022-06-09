@@ -4,7 +4,7 @@ const registerResponses = (form, response, logger, onResponsesRegistered) => {
     return;
   }
 
-  form.add(response.trim());
+  form.register(response.trim());
 
   if (!form.isFilled()) {
     logger(form.currentPrompt());

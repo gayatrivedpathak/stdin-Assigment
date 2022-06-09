@@ -20,7 +20,7 @@ class Form {
     });
   }
 
-  add(response) {
+  register(response) {
     const field = this.#getCurrentField();
     field.fill(response)
     if (field.isFilled()) {

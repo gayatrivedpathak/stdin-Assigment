@@ -9,7 +9,9 @@ describe('registerResponses', () => {
   it('should register the given response', () => {
     const nameField = new Field('name', 'Enter name');
     const form = new Form(nameField);
+
     registerResponses(form, 'juie', identity, identity);
+
     assert.deepStrictEqual(form.filledForm(), { name: 'juie' });
   });
 
@@ -19,7 +21,9 @@ describe('registerResponses', () => {
     const form = new Form(nameField, dobField);
     const logs = [];
     const display = content => logs.push(content);
+
     registerResponses(form, 'juie', display);
+
     assert.deepStrictEqual(logs, ['Enter dob']);
   });
 

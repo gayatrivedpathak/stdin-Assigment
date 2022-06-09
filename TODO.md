@@ -1,9 +1,9 @@
 ## DOING
 
 ## TODO 
-- [ ] Add tests for the field entity
 
 ## DONE
+- [x] Add tests for the field entity
 - [x] Inject field parsers in the field constructor
 - [x] Implement multiliField
 - [x] Add tests for the form entity

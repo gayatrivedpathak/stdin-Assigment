@@ -21,7 +21,9 @@ describe('Form', () => {
   it('should register the response to form', () => {
     const nameField = new Field('name', 'Enter name');
     const form = new Form(nameField);
+
     form.register('Juie');
+
     assert.deepStrictEqual(form.filledForm(), { name: 'Juie' });
   });
 
